@@ -21,7 +21,7 @@ global:
   ##
   imagePullSecrets: []
   defaultStorageClass: ""
-  storageClass: ""
+  storageClass: "gp2"
   ## Security parameters
   ##
   security:

@@ -1,9 +1,0 @@
-architecture: replicaset
-replicaCount: 1
-persistence:
-  enabled: true
-  size: 1Gi
-  storageClass: "gp2"
-auth:
-  enabled: true
-  rootPassword: "1234"

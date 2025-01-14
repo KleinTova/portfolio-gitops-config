@@ -1,18 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: event-planner
+  name: ingress-nginx
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/KleinTova/portfolio-gitops-config.git'
-    path: event-planner-umbrella-chart
-    targetRevision: main
+    repoURL: 'https://kubernetes.github.io/ingress-nginx'
+    chart: ingress-nginx
+    targetRevision: 4.7.0
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: event-planner
-
+    namespace: ingress-nginx
   syncPolicy:
     automated:
       prune: true

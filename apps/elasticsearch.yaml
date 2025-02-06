@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elasticsearch
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.elastic.co'
+    chart: elasticsearch
+    targetRevision: 8.5.1
+    helm:
+      values: |
+        replicas: 2
+        minimumMasterNodes: 1
+        imageTag: 8.6.2
+        volumeClaimTemplate:
+          storageClassName: "gp2"
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "750m"
+            memory: "2Gi"
+        esJavaOpts: "-Xms512m -Xmx512m"
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: logging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

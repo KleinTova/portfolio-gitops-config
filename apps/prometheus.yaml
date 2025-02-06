@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: "https://prometheus-community.github.io/helm-charts"
+    chart: kube-prometheus-stack
+    targetRevision: 68.4.4
+    helm:
+      values: |
+        crds:
+          enabled: true
+        prometheus:
+          prometheusSpec:
+            additionalScrapeConfigs:
+              - job_name: expense-tracker
+                honor_labels: true
+                scrape_interval: 1m
+                scrape_timeout: 30s
+                metrics_path: /metrics
+                scheme: http
+                static_configs:
+                  - targets:
+                      - search-projects.ddns.net
+            serviceMonitorSelectorNilUsesHelmValues: false
+            podMonitorSelectorNilUsesHelmValues: false
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: gp2
+                  resources:
+                    requests:
+                      storage: 10Gi
+        grafana:
+          persistence:
+            enabled: true
+            storageClassName: gp2
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - ServerSideApply=true
+      - Validate=false
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+      - RespectIgnoreDifferences=true
+      - ApplyOutOfSyncOnly=true

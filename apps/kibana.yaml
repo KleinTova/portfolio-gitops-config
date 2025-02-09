@@ -1,6 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave-depends-on: "elasticsearch"
   name: kibana
   namespace: argocd
 spec:
@@ -9,6 +12,9 @@ spec:
     repoURL: 'https://helm.elastic.co'
     chart: kibana
     targetRevision: 8.5.1
+    helm:
+      values: |
+        elasticsearchHosts: "http://elasticsearch-master:9200"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: logging

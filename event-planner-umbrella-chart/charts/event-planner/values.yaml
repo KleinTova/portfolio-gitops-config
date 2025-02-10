@@ -3,7 +3,7 @@ replicaCount: 2
 namespace: event-planner
 image:
   repository: "006262944085.dkr.ecr.us-east-1.amazonaws.com/tova-portfolio/event-planner"
-  tag: "v1.0.16"
+  tag: "v1.0.17"
   pullPolicy: "Always"
 
 container:

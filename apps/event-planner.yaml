@@ -3,7 +3,6 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "3"
-    argocd.argoproj.io/sync-wave-depends-on: "ingress-nginx"
   name: event-planner
   namespace: argocd
 spec:

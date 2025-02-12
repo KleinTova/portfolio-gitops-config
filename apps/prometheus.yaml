@@ -13,27 +13,22 @@ spec:
       values: |
         crds:
           enabled: true
+        prometheus-node-exporter:
+          fullnameOverride: node-exporter
+          hostPort: null
+        kube-state-metrics:
+          fullnameOverride: kube-state-metrics
         prometheus:
           prometheusSpec:
-            additionalScrapeConfigs:
-              - job_name: expense-tracker
-                honor_labels: true
-                scrape_interval: 1m
-                scrape_timeout: 30s
-                metrics_path: /metrics
-                scheme: http
-                static_configs:
-                  - targets:
-                      - search-projects.ddns.net
             serviceMonitorSelectorNilUsesHelmValues: false
-            podMonitorSelectorNilUsesHelmValues: false
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: gp2
-                  resources:
-                    requests:
-                      storage: 10Gi
+            serviceMonitorNamespaceSelector:
+              matchExpressions:
+              - key: kubernetes.io/metadata.name
+                operator: In
+                values:
+                - monitoring
+                - event-planner
+
         grafana:
           persistence:
             enabled: true

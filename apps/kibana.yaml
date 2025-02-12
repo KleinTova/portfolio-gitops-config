@@ -3,7 +3,6 @@ kind: Application
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "5"
-    argocd.argoproj.io/sync-wave-depends-on: "elasticsearch"
   name: kibana
   namespace: argocd
 spec:

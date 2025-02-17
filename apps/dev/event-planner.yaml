@@ -11,6 +11,9 @@ spec:
     repoURL: 'https://github.com/KleinTova/portfolio-gitops-config.git'
     path: event-planner-umbrella-chart
     targetRevision: main
+    helm:
+        valueFiles:
+          - - ../../config/dev/event-planner.yaml
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: event-planner

@@ -1,0 +1,21 @@
+crds:
+  enabled: true
+prometheus-node-exporter:
+  fullnameOverride: node-exporter
+  hostPort: null
+kube-state-metrics:
+  fullnameOverride: kube-state-metrics
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitorNamespaceSelector:
+      matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: In
+        values:
+        - monitoring
+        - event-plan
+grafana:
+  persistence:
+    enabled: true
+    storageClassName: gp2

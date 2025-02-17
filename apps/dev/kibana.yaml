@@ -6,7 +6,7 @@ metadata:
   name: kibana
   namespace: argocd
 spec:
-  project: default
+  project: infrastructure
   source:
     repoURL: 'https://helm.elastic.co'
     chart: kibana

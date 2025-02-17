@@ -4,36 +4,14 @@ metadata:
   name: kube-prometheus-stack
   namespace: argocd
 spec:
-  project: default
+  project: infrastructure
   source:
     repoURL: "https://prometheus-community.github.io/helm-charts"
     chart: kube-prometheus-stack
     targetRevision: 68.4.4
     helm:
-      values: |
-        crds:
-          enabled: true
-        prometheus-node-exporter:
-          fullnameOverride: node-exporter
-          hostPort: null
-        kube-state-metrics:
-          fullnameOverride: kube-state-metrics
-        prometheus:
-          prometheusSpec:
-            serviceMonitorSelectorNilUsesHelmValues: false
-            serviceMonitorNamespaceSelector:
-              matchExpressions:
-              - key: kubernetes.io/metadata.name
-                operator: In
-                values:
-                - monitoring
-                - event-planner
-
-        grafana:
-          persistence:
-            enabled: true
-            storageClassName: gp2
-
+        valueFiles:
+          - ../../config/dev/prometheus.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

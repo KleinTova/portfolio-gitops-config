@@ -1,0 +1,23 @@
+imageTag: 8.6.2
+daemonset:
+  filebeatConfig:
+    filebeat.yml: |
+      filebeat.inputs:
+      - type: container
+        paths:
+          - /var/log/containers/*.log
+        processors:
+          - add_kubernetes_metadata:
+              matchers:
+              - logs_path:
+                  logs_path: "/var/log/container
+      output.elasticsearch:
+        hosts: '["https://${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}"]'
+        username: '${ELASTICSEARCH_USERNAME}'
+        password: '${ELASTICSEARCH_PASSWORD}'
+        protocol: https
+        ssl.certificate_authorities: ["/usr/share/filebeat/certs/ca.crt"]
+        index: "filebeat-%{[agent.version]}-%{+yyyy.MM.dd}"             
+      setup.template.name: "filebeat"	
+      setup.template.pattern: "filebeat-*-*"	
+      setup.ilm.policy_name: "7-days-default"

@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: infrastructure
+  namespace: argocd
+spec:
+  description: "Project for infrastructure applications"
+  sourceRepos:
+    - '*'  # אפשר להגביל לרשימות ריפוזיטוריים ספציפיים
+  destinations:
+    - namespace: '*'
+      server: '*'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

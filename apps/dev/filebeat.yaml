@@ -7,13 +7,16 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: infrastructure
-  source:
-    repoURL: 'https://helm.elastic.co'
-    targetRevision: 8.5.1
-    chart: filebeat
-    helm:
-        valueFiles:
-          - ../../config/dev/filebeat.yaml
+  sources:
+    - repoURL: 'https://helm.elastic.co'
+      targetRevision: 8.5.1
+      chart: filebeat
+      helm:
+          valueFiles:
+            - $values/config/dev/filebeat.yaml
+    - repoURL: "git@github.com:KleinTova/portfolio-gitops-config.git"
+      targetRevision: HEAD
+      ref: values
 
   destination:
     server: 'https://kubernetes.default.svc'

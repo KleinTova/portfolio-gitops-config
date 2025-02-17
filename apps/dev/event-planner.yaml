@@ -7,13 +7,16 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: 'https://github.com/KleinTova/portfolio-gitops-config.git'
-    path: event-planner-umbrella-chart
-    targetRevision: main
-    helm:
-        valueFiles:
-          - - ../../config/dev/event-planner.yaml
+  sources:
+    - repoURL: 'https://github.com/KleinTova/portfolio-gitops-config.git'
+      path: event-planner-umbrella-chart
+      targetRevision: main
+      helm:
+          valueFiles:
+            - $values/config/dev/event-planner.yaml
+    - repoURL: "git@github.com:KleinTova/portfolio-gitops-config.git"
+      targetRevision: HEAD
+      ref: values
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: event-planner

@@ -7,13 +7,17 @@ metadata:
   namespace: argocd
 spec:
   project: infrastructure
-  source:
-    repoURL: 'https://helm.elastic.co'
-    chart: elasticsearch
-    targetRevision: 8.5.1
-    helm:
-        valueFiles:
-          - ../../config/dev/elasticsearch.yaml
+  sources:
+    - repoURL: 'https://helm.elastic.co'
+      chart: elasticsearch
+      targetRevision: 8.5.1
+      helm:
+          valueFiles:
+            - $values/config/dev/elasticsearch.yaml
+    - repoURL: "git@github.com:KleinTova/portfolio-gitops-config.git"
+      targetRevision: HEAD
+      ref: values
+          
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: logging

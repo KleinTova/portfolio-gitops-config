@@ -5,13 +5,16 @@ metadata:
   namespace: argocd
 spec:
   project: infrastructure
-  source:
-    repoURL: "https://prometheus-community.github.io/helm-charts"
-    chart: kube-prometheus-stack
-    targetRevision: 68.4.4
-    helm:
-        valueFiles:
-          - ../../config/dev/prometheus.yaml
+  sources:
+    - repoURL: "https://prometheus-community.github.io/helm-charts"
+      chart: kube-prometheus-stack
+      targetRevision: 68.4.4
+      helm:
+          valueFiles:
+            - $values/config/dev/prometheus.yaml
+    - repoURL: "git@github.com:KleinTova/portfolio-gitops-config.git"
+      targetRevision: HEAD
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

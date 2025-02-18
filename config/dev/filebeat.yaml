@@ -10,7 +10,7 @@ daemonset:
           - add_kubernetes_metadata:
               matchers:
               - logs_path:
-                logs_path: "/var/log/containers/"
+                  logs_path: "/var/log/containers/"
       output.elasticsearch:
         hosts: '["https://${ELASTICSEARCH_HOSTS:elasticsearch-master:9200}"]'
         username: '${ELASTICSEARCH_USERNAME}'

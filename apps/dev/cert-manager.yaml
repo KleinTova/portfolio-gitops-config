@@ -23,3 +23,24 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-configs
+  namespace: argocd
+spec:
+  project: infrastructure
+  source:
+    repoURL: 'https://github.com/KleinTova/portfolio-gitops-config.git'
+    targetRevision: main
+    path: /cluster-issuer
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

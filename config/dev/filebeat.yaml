@@ -8,7 +8,7 @@ daemonset:
           - /var/log/containers/*.log
         processors:
           - add_kubernetes_metadata:
-            matchers:
+              matchers:
               - logs_path:
                 logs_path: "/var/log/containers/"
       output.elasticsearch:

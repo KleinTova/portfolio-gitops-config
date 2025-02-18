@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: 'https://github.com/KleinTova/portfolio-gitops-config.git'
     targetRevision: main
-    path: apps/dev
+    path: apps/$ENV_GITOPS
 
   destination:
     server: 'https://kubernetes.default.svc'

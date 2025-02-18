@@ -34,7 +34,7 @@ spec:
   source:
     repoURL: 'https://github.com/KleinTova/portfolio-gitops-config.git'
     targetRevision: main
-    path: /cluster-issuer
+    path: cluster-issuer
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: cert-manager

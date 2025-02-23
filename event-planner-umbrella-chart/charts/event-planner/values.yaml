@@ -1,4 +1,3 @@
-DBpassword: "1234"
 replicaCount: 2
 namespace: event-planner
 image:

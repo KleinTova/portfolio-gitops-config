@@ -1,0 +1,17 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  namespace: {{ .Values.namespace }}
+data:
+  MONGODB_PART_URI: |
+    {{- $fullnameOverride := .Values.mongodb.fullnameOverride -}}
+    {{- $replicaCount := .Values.mongodb.replicaCount | int -}}
+    {{- $namespace := .Release.Namespace -}}
+    {{- $uris := "" -}}
+    {{- range $i := until $replicaCount }}
+      {{- $uris = printf "%s%s-%d.%s-headless.%s.svc.cluster.local:27017" $uris $fullnameOverride $i $fullnameOverride $namespace -}}
+      {{- if ne $i (sub $replicaCount 1) }}{{ $uris = printf "%s," $uris }}{{ end }}
+    {{- end }}
+    {{ printf "%s/projectsDB?authSource=admin&replicaSet=replica" $uris }}

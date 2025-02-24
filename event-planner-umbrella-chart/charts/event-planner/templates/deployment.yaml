@@ -28,10 +28,10 @@ spec:
             - configMapRef:
                 name: {{ .Release.Name }}-config
             - secretRef:
-                name: {{ .Release.Name }}-secret
+                name: mongodb-secret
           env:
             - name: MONGODB_URI
-              value: mongodb://$(USER):$(PASSWORD)$(MONGODB_PART_URI)
+              value: mongodb://$(MONGODB_ROOT_USER):$(MONGODB_ROOT_PASSWORD)$(MONGODB_PART_URI)
           resources:
             requests:
               memory: {{ .Values.resources.requests.memory }}

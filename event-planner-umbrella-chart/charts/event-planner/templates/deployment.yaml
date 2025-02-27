@@ -30,7 +30,7 @@ spec:
             - secretRef:
                 name: mongodb-secret
           env:
-            - name: MONGODB_URI
+            - name: MONGO_URI
               value: mongodb://$(MONGODB_ROOT_USER):$(MONGODB_ROOT_PASSWORD)$(MONGODB_PART_URI)
           resources:
             requests:

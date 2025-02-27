@@ -4,7 +4,6 @@ metadata:
   name: {{ .Release.Name }}-config
   namespace: {{ .Values.namespace }}
 data:
-  MONGODB_PART_URI: "mongodb-headless:27017/event_db?authSource=admin"
   MONGODB_PART_URI: {{ printf "@%s-mongodb-headless:27017/event_db?authSource=admin" .Release.Name | b64enc }}
 
 
